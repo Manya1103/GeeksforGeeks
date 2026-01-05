@@ -19,10 +19,16 @@ class Solution {
             map[arr[i]]++;
              
             if (map[arr[i]] > p){
-            map[arr[i]] = -1; // handles duplicates
+            map[arr[i]] = -1; // to handle duplicates
                count += 1;
             }
             
         } return count;
     }
 };
+
+/*
+Method - 2
+
+
+*/
