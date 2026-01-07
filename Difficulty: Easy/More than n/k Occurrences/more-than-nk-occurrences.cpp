@@ -6,7 +6,7 @@ class Solution {
         int n = arr.size();
         int p = n/k;
         
-        sort(arr.begin(), arr.end());
+        // sort(arr.begin(), arr.end());
         unordered_map<int, int> map;
         
         int count = 0;
@@ -26,9 +26,3 @@ class Solution {
         } return count;
     }
 };
-
-/*
-Method - 2
-
-
-*/
