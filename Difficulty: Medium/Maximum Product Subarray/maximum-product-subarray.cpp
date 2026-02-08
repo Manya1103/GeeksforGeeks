@@ -7,7 +7,10 @@ class Solution {
         int ma = arr[0];  // ma = max & mi = min
         int mi = arr [0]; 
         for (int i = 1; i < n; i++){
-            if (arr[i] <= 0){
+            /*If current element is negative, swap because max becomes min and min becomes max because 
+            of the multiplication of two negative numbers */
+            
+            if (arr[i] < 0){ 
                swap (ma, mi);
             }
              ma = max(arr[i], ma * arr[i]);
