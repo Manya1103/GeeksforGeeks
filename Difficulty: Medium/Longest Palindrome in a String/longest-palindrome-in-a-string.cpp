@@ -1,43 +1,61 @@
 class Solution {
   public:
+    // manacher's algorithm- O(n) time & O(n) space complexity- 2*n + 3
+        // - best among all for longest Palindrome substring
+        // (dp, center expansion, brute force, rabin carp)
+        vector<int>p;  
+        
+        string ms; // transformed string with # and sentinels(@ and $)
+       void manacher(string &s ){ // preprocessing
+        // left sentinel
+        ms = "@"; 
+        for (char c : s) {
+            ms += "#" + string(1, c);
+        }
+        
+        // right sentinel
+        ms += "#$"; 
+
+    }
+    
     string longestPalindrome(string &s) {
         // code here
-   // dynamic programming - tabulation
-   int n = s.size();
-   
-    vector<vector<bool>> dp(n, vector<bool>(n, false)); //dp table
-    
-    int start = 0, maxLen = 1;
+        manacher(s); 
+      int n = ms.size();
+      p.assign(n, 0); // creates a vector p of size n with initial value 0
+      int l = 0, r = 0;
+       for (int i = 1; i < n - 1; ++i) {
+           
+           int mirror = l + r - i;  // mirror of i around center (l + r)/2
+           
+            // initialize p[i] based on its mirror 
+            // if within bounds
+            if (i < r)
+                p[i] = min(r - i, p[mirror]);
 
-    for (int i = 0; i < n; i++)  // All substrings of length 1 are palindromes
-        dp[i][i] = true;
+            // expand palindrome centered at i
+            while (ms[i + 1 + p[i]] == ms[i - 1 - p[i]]){
+                ++p[i];
+            }
 
-    for (int i = 0; i < n - 1; i++) {      // Check for sub-string of length 2
-        if (s[i] == s[i + 1]) {
-            dp[i][i + 1] = true;
-            if (maxLen<2) {
-                start = i;
-                maxLen = 2;
+            // update [l, r] if the palindrome expands 
+            // beyond current r
+            if (i + p[i] > r) {
+                l = i - p[i];
+                r = i + p[i];
             }
         }
-    }
-
-    for (int k = 3; k <= n; k++) {     // Check for lengths greater than 2
-        for (int i = 0; i < n - k + 1; ++i) {
-            int j = i + k - 1;
-
-            if (dp[i + 1][j - 1] && s[i] == s[j]) {
-                dp[i][j] = true;
-
-                if (k > maxLen) {
-                    start = i;
-                    maxLen = k;
-                }
+        
+        int maxLen = 0, center = 0;
+        for (int i = 1; i < n - 1; ++i) {
+            if (p[i] > maxLen) {
+                maxLen = p[i];
+                center = i;
+                
             }
+            
         }
-    }
-
-    return s.substr(start, maxLen);
-
+        int start = (center - maxLen) / 2;
+        return s.substr(start, maxLen);
     }
 };
