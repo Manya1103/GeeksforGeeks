@@ -14,7 +14,9 @@ class Solution {
   public:
     Node *reverseKGroup(Node *head, int k) {
         // code here
-        
+        // using recursion- O(n) time & O(n/k)- space (n/k no of groups)
+        // can be done with O(1) space complexity using iteration method
+        // recursion uses call stack
      Node *curr = head, *prev = nullptr, *next;
      int count = 0;
         while(curr != nullptr && count < k ){
