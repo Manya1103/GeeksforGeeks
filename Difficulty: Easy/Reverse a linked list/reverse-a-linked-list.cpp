@@ -11,6 +11,11 @@ class Node {
 };
 */
 
+/*
+O(n) time & O(1) space
+using recursion or stack- O(n) time & O(n) space
+*/
+
 class Solution {
   public:
     Node* reverseList(Node* head) {
@@ -24,7 +29,7 @@ class Solution {
             prev = curr;
             curr = next;
         }
-        return prev;
+        return prev; // new head (last node)
     }
     
      void printList()
