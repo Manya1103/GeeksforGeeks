@@ -1,33 +1,40 @@
 class Solution {
   public:
-    // Function to find common elements in three arrays.
-    vector<int> commonElements(vector<int> &arr1, vector<int> &arr2,
-                               vector<int> &arr3) {
-        // Code Here
-        int m = arr1.size();
-        int n = arr2.size();
-        int p = arr3.size();
-        
-        vector<int> ans;
-        
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        while (i < m && j < n && k < p){
-            if(arr1[i] == arr2[j] && arr1[i] == arr3[k]){
-            if(ans.empty() || ans.back()!=arr1[i]){
-                ans.push_back(arr1[i]);
-            }
-            
-            i++, j++, k++;
-            }
-            else if(arr1[i]<arr2[j]) i++;
+    vector<int> commonElements(vector<int> &a, vector<int> &b, vector<int> &c) {
+        // code here
+        // using three pointers
+        //  O(n1 + n2 + n3) Time and O(1) Space
+         int i = 0, j = 0, k = 0;
+    int n1 = a.size(), n2 = b.size(), n3 = c.size();
+    vector<int> common;
 
-            else if(arr2[j]<arr3[k]) j++;
-            
-            else k++;
+    while (i < n1 && j < n2 && k < n3){
+        
+        // If all elements are equal, it's a common element
+        if (a[i] == b[j] && b[j] == c[k]){
+            common.push_back(a[i]);
+            i++;
+            j++;
+            k++;
+
+            // Skip duplicates in all arrays
+            while (i < n1 && a[i] == a[i - 1])
+                i++;
+            while (j < n2 && b[j] == b[j - 1])
+                j++;
+            while (k < n3 && c[k] == c[k - 1])
+                k++;
         }
-        return ans;
-       
+        
+        // Move the pointer with the smallest value
+        else if (a[i] < b[j])
+            i++;
+        else if (b[j] < c[k])
+            j++;
+        else
+            k++;
+    }
+
+    return common;
     }
 };
